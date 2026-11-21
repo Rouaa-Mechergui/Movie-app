@@ -1,0 +1,9 @@
+<div class="container">
+  <h1 (click)="navigateToHome()" title="Return to home">My Movie-DB</h1>
+  <button (click)="navigateToWishList()">
+    Wish List <fa-icon [icon]="faHeart" />
+    @if (movieService.wishList().length > 0) {
+      <span class="badge">{{ movieService.wishList().length }}</span>
+    }
+  </button>
+</div>
