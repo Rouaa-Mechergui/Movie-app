@@ -1,0 +1,137 @@
+<div class="movie-list-wrapper">
+  @if (getFeaturedMovie(); as featured) {
+    <div class="hero-banner">
+      <div class="hero-backdrop">
+        <img
+          [src]="featured.backdrop_path ? 'https://image.tmdb.org/t/p/original/' + featured.backdrop_path : (featured.poster_path ? 'https://image.tmdb.org/t/p/original/' + featured.poster_path : 'favicon.ico')"
+          [alt]="featured.title"
+        />
+        <div class="hero-gradient"></div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">{{ featured.title }}</h1>
+
+        <div class="hero-meta">
+          @if (featured.vote_average) {
+            <span class="hero-rating">
+              <fa-icon [icon]="faStar" /> {{ featured.vote_average.toFixed(1) }} / 10
+            </span>
+          }
+          @if (featured.release_date) {
+            <span class="hero-year">{{ featured.release_date.slice(0, 4) }}</span>
+          }
+        </div>
+
+        <p class="hero-overview">{{ featured.overview }}</p>
+
+        <div class="hero-actions">
+          <button class="btn-hero-play" type="button" (click)="navigateTo(featured)">
+            <fa-icon [icon]="faPlay" /> View Details
+          </button>
+          <button
+            class="btn-hero-wish"
+            type="button"
+            [class.active]="movieService.isInWishList(featured.id)"
+            (click)="toggleWish(featured)"
+          >
+            <fa-icon [icon]="faHeart" />
+            {{ movieService.isInWishList(featured.id) ? 'In Wishlist' : 'Add to Wishlist' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="content-section">
+    <div class="section-toolbar">
+      <div class="section-title-wrap">
+        <h2 class="section-title">
+          @if (movieService.searchQuery() !== '') {
+            Search Results
+          } @else {
+            Explore Movies
+          }
+        </h2>
+        <span class="movie-count">({{ getSortedMovies().length }} titles)</span>
+      </div>
+
+      <div class="sort-bar">
+        <span class="sort-label">Sort:</span>
+        <button
+          type="button"
+          class="sort-chip"
+          [class.active]="sortBy() === 'default'"
+          (click)="setSort('default')"
+        >
+          Default
+        </button>
+        <button
+          type="button"
+          class="sort-chip"
+          [class.active]="sortBy() === 'rating'"
+          (click)="setSort('rating')"
+        >
+          Top Rated
+        </button>
+        <button
+          type="button"
+          class="sort-chip"
+          [class.active]="sortBy() === 'date'"
+          (click)="setSort('date')"
+        >
+          Newest
+        </button>
+        <button
+          type="button"
+          class="sort-chip"
+          [class.active]="sortBy() === 'title'"
+          (click)="setSort('title')"
+        >
+          A-Z
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      @if (getSortedMovies().length === 0) {
+        <div class="empty-state">
+          <p class="empty-text">No movies found.</p>
+        </div>
+      } @else {
+        @for (movie of getSortedMovies(); track movie.id) {
+          <div class="movie-card" (click)="navigateTo(movie)">
+            <div class="movie-poster">
+              <img
+                [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/original/' + movie.poster_path : 'favicon.ico'"
+                [alt]="movie.title"
+              />
+
+              <button
+                class="wish-badge"
+                type="button"
+                [class.active]="movieService.isInWishList(movie.id)"
+                (click)="toggleWish(movie, $event)"
+              >
+                <fa-icon [icon]="faHeart" />
+              </button>
+
+              @if (movie.vote_average) {
+                <span class="rating-badge">
+                  <fa-icon [icon]="faStar" /> {{ movie.vote_average.toFixed(1) }}
+                </span>
+              }
+            </div>
+
+            <div class="movie-detail">
+              <h2>{{ movie.title }}</h2>
+              @if (movie.release_date) {
+                <span class="release-year">{{ movie.release_date.slice(0, 4) }}</span>
+              }
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1.25rem 3rem 0.5rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  padding: 0.45rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-container:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.search-container:focus-within {
+  border-color: #e50914;
+  background: #000000;
+  box-shadow: 0 0 12px rgba(229, 9, 20, 0.4);
+}
+
+label {
+  color: #e50914;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(229, 9, 20, 0.15);
+  padding: 2px 6px;
+  border-radius: 2px;
+  user-select: none;
+}
+
+input {
+  all: unset;
+  flex-grow: 1;
+  min-width: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.88rem;
+  color: #ffffff;
+}
+
+input::placeholder {
+  color: #8c8c8c;
+  font-size: 0.84rem;
+}
+
+fa-icon {
+  color: #b3b3b3;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.search-container:focus-within fa-icon {
+  color: #e50914;
+  transform: scale(1.1);
+}
+
+.clear-btn {
+  all: unset;
+  color: #8c8c8c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  font-size: 0.9rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+  color: #e50914;
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 1.25rem 0.5rem;
+    justify-content: center;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+}
